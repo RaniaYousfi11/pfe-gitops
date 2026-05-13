@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hss-argocd-deploy
+  namespace: hss-cnf1
+  labels:
+    app: hss
+    site: site3
+    managed-by: argocd
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hss
+  template:
+    metadata:
+      labels:
+        app: hss
+        site: site3
+    spec:
+      containers:
+        - name: hss-container
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "25m"
+            limits:
+              memory: "64Mi"
+              cpu: "50m"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10

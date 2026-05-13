@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: drf-site2
+  namespace: argocd
+  labels:
+    product: drf
+    site: site2
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/RaniaYousfi11/pfe-gitops.git
+    targetRevision: main
+    path: apps/drf/site2
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: drf-cnf1
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=false
+      - ApplyOutOfSyncOnly=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
