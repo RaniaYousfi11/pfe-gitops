@@ -6,8 +6,7 @@ metadata:
   labels:
     product: udm
     site: site3
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    managed-by: argocd
 spec:
   project: default
   source:
@@ -15,18 +14,9 @@ spec:
     targetRevision: main
     path: apps/udm/site3
   destination:
-    server: https://kubernetes.default.svc
+    name: site3
     namespace: udm-cnf1
   syncPolicy:
-    automated:
-      prune: false
-      selfHeal: true
     syncOptions:
       - CreateNamespace=false
       - ApplyOutOfSyncOnly=true
-    retry:
-      limit: 5
-      backoff:
-        duration: 5s
-        factor: 2
-        maxDuration: 3m
