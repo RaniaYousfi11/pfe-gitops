@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pfe-cnf-app
+  labels:
+    app: pfe-cnf-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pfe-cnf-app
+  template:
+    metadata:
+      labels:
+        app: pfe-cnf-app
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+        - name: pfe-cnf-app
+          image: raniayousfi11/pfe-cnf-app:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PRODUCT
+              value: "CNF"
+            - name: SITE
+              value: "default"
+            - name: CNF_NAME
+              value: "pfe-cnf-app"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            capabilities:
+              drop:
+                - ALL

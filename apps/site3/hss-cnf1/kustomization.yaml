@@ -1,0 +1,45 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: hss-cnf1
+
+resources:
+  - ../../base
+
+patches:
+  - target:
+      kind: Deployment
+      name: pfe-cnf-app
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: hss-cnf1-app
+      - op: replace
+        path: /spec/selector/matchLabels/app
+        value: hss-cnf1-app
+      - op: replace
+        path: /spec/template/metadata/labels/app
+        value: hss-cnf1-app
+      - op: replace
+        path: /spec/template/spec/containers/0/name
+        value: hss-cnf1-app
+      - op: replace
+        path: /spec/template/spec/containers/0/env/0/value
+        value: HSS
+      - op: replace
+        path: /spec/template/spec/containers/0/env/1/value
+        value: site3
+      - op: replace
+        path: /spec/template/spec/containers/0/env/2/value
+        value: hss-cnf1
+
+  - target:
+      kind: Service
+      name: pfe-cnf-app-svc
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: hss-cnf1-svc
+      - op: replace
+        path: /spec/selector/app
+        value: hss-cnf1-app
