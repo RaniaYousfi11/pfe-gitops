@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: udm-container
-          image: nginx:alpine
+          image: raniayousfi11/pfe-cnf-app:04febba
           ports:
             - containerPort: 80
           resources:
