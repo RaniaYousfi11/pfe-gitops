@@ -20,9 +20,9 @@ spec:
     spec:
       containers:
         - name: drf-container
-          image: raniayousfi11/pfe-cnf-app:dec3657
+          image: nginx:alpine
           ports:
-            - containerPort: 8080
+            - containerPort: 80
           resources:
             requests:
               memory: "32Mi"
@@ -33,12 +33,12 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: 8080
+              port: 80
             initialDelaySeconds: 10
             periodSeconds: 30
           readinessProbe:
             httpGet:
               path: /
-              port: 8080
+              port: 80
             initialDelaySeconds: 5
             periodSeconds: 10
