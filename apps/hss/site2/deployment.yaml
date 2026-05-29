@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: hss-container
-          image: nginx:alpine
+          image: raniayousfi11/pfe-cnf-app:f53115e
           ports:
             - containerPort: 80
           resources:
