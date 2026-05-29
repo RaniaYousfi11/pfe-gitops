@@ -8,4 +8,4 @@ resources:
 images:
   - name: raniayousfi11/pfe-cnf-app
     newName: raniayousfi11/pfe-cnf-app
-    newTag: f53115e
+    newTag: 93a2a94

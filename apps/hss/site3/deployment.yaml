@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: hss-container
-          image: raniayousfi11/pfe-cnf-app:f53115e
+          image: raniayousfi11/pfe-cnf-app:93a2a94
           ports:
             - containerPort: 8080
           resources:
